@@ -4,9 +4,16 @@ import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 from supabase import create_client, Client
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # For production, replace "*" with your Vercel URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Credentials from Railway Environment Variables
 url = os.environ.get("SUPABASE_URL")
