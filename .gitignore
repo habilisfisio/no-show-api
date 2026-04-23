@@ -7,8 +7,5 @@ __pycache__/
 venv/
 .venv/
 
-# ML Models
-models/*.pkl
-
 # OS
 .DS_Store
