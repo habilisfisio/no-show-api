@@ -67,4 +67,4 @@ JSON
 
     Library Versions: This project requires scikit-learn==1.6.1 to maintain compatibility with the no_show_pipeline.pkl exported from Colab.
 
-    Data Drift: Predictions should be monitored via the ai_logs table to detect when model performance begins to decrease over time.
+    Data Drift: Predictions should be monitored via the ai_logs table to detect when model performance begins to decrease over time.# no-show-api
