@@ -1,0 +1,14 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# ML Models
+models/*.pkl
+
+# OS
+.DS_Store
