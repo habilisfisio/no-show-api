@@ -5,6 +5,9 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from supabase import create_client, Client
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 origins = [
@@ -30,6 +33,10 @@ supabase = create_client(url, key)
 
 # Load the pipeline you created in Colab
 model = joblib.load("models/no_show_pipeline.pkl")
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "version": "tcc_g_v1"}
 
 @app.post("/predict/{agendamento_id}")
 async def get_prediction(agendamento_id: str):
