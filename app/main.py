@@ -14,7 +14,7 @@ origins = [
     "https://octahealth.com.br",
     "https://www.octahealth.com.br",
     "https://octa-health.lovable.app",
-    "https://id-preview--4efb51f1-dd1d-4fe0-a7ea-f3c4174deafa.lovable.app",
+    "https://id-preview--4efb51f1-dd1d-4fe0-a7ea-f3c4174deafa.lovable.app","healthcheck.railway.app",
 ]
 
 # 2. Add the Middleware with the list
