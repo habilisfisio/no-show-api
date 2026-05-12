@@ -7,12 +7,20 @@ from supabase import create_client, Client
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+origins = [
+    "https://octahealth.com.br",
+    "https://www.octahealth.com.br",
+    "https://octa-health.lovable.app",
+    "https://id-preview--4efb51f1-dd1d-4fe0-a7ea-f3c4174deafa.lovable.app",
+]
+
+# 2. Add the Middleware with the list
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # For production, replace "*" with your Vercel URL
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allows GET, POST, OPTIONS, etc.
+    allow_headers=["*"],  # Allows Content-Type, Authorization, etc.
 )
 
 # Credentials from Railway Environment Variables
@@ -82,23 +90,33 @@ async def get_prediction(agendamento_id: str):
         risk_level = "ALTO"
         pred_status = "RISCO DE FALTA"
 
-    # 5. PERSISTENCE
+    # 5. PERSISTENCE (Safe Guard against multiple deployments)
     try:
         prediction_entry = {
             "agendamento_id": agendamento_id,
             "predicao_status": pred_status,
             "probabilidade_risco": round(probability, 2),
-            "modelo_versao": "tcc_g_v1"
+            "modelo_versao": "tcc_g_v1" # Ensure this is updated in your newest code
         }
-        supabase.table("ai_predicoes").insert(prediction_entry).execute()
 
+        # UPSERT: Update if exists, Insert if not.
+        # This prevents the 'no-show-api:v1' and 'tcc_g_v1' from co-existing
+        # for the same agendamento_id.
+        supabase.table("ai_predicoes").upsert(
+            prediction_entry,
+            on_conflict="agendamento_id"
+        ).execute()
+
+        # Logs can remain as inserts to see the 'double hit' happening in real-time
         supabase.table("ai_logs").insert({
-        "agendamento_id": agendamento_id,
-        "predicao": pred_status,
-        "probabilidade": round(probability, 2)
-    }).execute()
+            "agendamento_id": agendamento_id,
+            "predicao": pred_status,
+            "probabilidade": round(probability, 2),
+            "modelo_versao": "tcc_g_v1"
+        }).execute()
+
     except Exception as e:
-        print(f"Logging Error: {e}")
+        print(f"Persistence Error: {e}")
 
     return {
         "agendamento_id": agendamento_id,
