@@ -36,7 +36,14 @@ model = joblib.load("models/no_show_pipeline.pkl")
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "version": "tcc_g_v1"}
+    if model is None:
+        raise HTTPException(status_code=503, detail="Model not loaded")
+        
+    return {
+        "status": "healthy", 
+        "version": "tcc_g_v1",
+        "environment": os.environ.get("RAILWAY_ENVIRONMENT", "local")
+    }
 
 @app.post("/predict/{agendamento_id}")
 async def get_prediction(agendamento_id: str):
