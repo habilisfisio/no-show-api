@@ -32,7 +32,7 @@ key = os.environ.get("SUPABASE_KEY")
 supabase = create_client(url, key)
 
 # Load the pipeline you created in Colab
-model = joblib.load("models/no_show_pipeline.pkl")
+model = joblib.load("models/no_show_pipeline_v2.pkl")
 
 @app.get("/health")
 async def health_check():
@@ -110,11 +110,11 @@ async def get_prediction(agendamento_id: str):
             "agendamento_id": agendamento_id,
             "predicao_status": pred_status,
             "probabilidade_risco": round(probability, 2),
-            "modelo_versao": "tcc_g_v1" # Ensure this is updated in your newest code
+            "modelo_versao": "tcc_g_v2" # Ensure this is updated in your newest code
         }
 
         # UPSERT: Update if exists, Insert if not.
-        # This prevents the 'no-show-api:v1' and 'tcc_g_v1' from co-existing
+        # This prevents the 'no-show-api:v1' and 'tcc_g_v2' from co-existing
         # for the same agendamento_id.
         supabase.table("ai_predicoes").upsert(
             prediction_entry,
@@ -126,7 +126,7 @@ async def get_prediction(agendamento_id: str):
             "agendamento_id": agendamento_id,
             "predicao": pred_status,
             "probabilidade": round(probability, 2),
-            "modelo_versao": "tcc_g_v1"
+            "modelo_versao": "tcc_g_v2"
         }).execute()
 
     except Exception as e:
