@@ -15,11 +15,7 @@ origins = [
     "https://www.octahealth.com.br",
     "https://octa-health.lovable.app",
     "https://id-preview--4efb51f1-dd1d-4fe0-a7ea-f3c4174deafa.lovable.app",
-    "http://healthcheck.railway.app",
-    "https://octahealth.com.br",
-    "https://www.octahealth.com.br",
-    "https://octa-health.lovable.app",
-    "https://id-preview--4efb51f1-dd1d-4fe0-a7ea-f3c4174deafa.lovable.app"
+    "http://healthcheck.railway.app"
 ]
 
 # 2. Add the Middleware with the list
@@ -46,7 +42,7 @@ async def health_check():
         
     return {
         "status": "healthy", 
-        "version": "tcc_g_v1",
+        "version": "tcc_g_v2",
         "environment": os.environ.get("RAILWAY_ENVIRONMENT", "local")
     }
 
@@ -68,33 +64,41 @@ async def get_prediction(agendamento_id: str):
     history = history_query.data or {"total_agendamentos_historico": 0, "taxa_risco_paciente": 0.0}
     
     # 3. Feature Engineering (Seguindo a lógica do seu TCC_Ana.ipynb)
+    # 3. Feature Engineering
     appt_date = pd.to_datetime(appt['data_agendamento'])
+    # Cria o dicionário base (gabarito) com todas as colunas zeradas
+    features_dict = {col: 0.0 for col in model.model.exog_names}
+    features_dict['const'] = 1.0  # Obrigatório para Statsmodels
 
-    # Prevenção de erro: split seguro da hora
-    hora_str = appt.get('hora_inicio', '00:00:00')
-    hora_int = int(hora_str.split(':')[0]) if hora_str else 0
+    # Preenche valores numéricos
+    features_dict['valor_servico'] = float(appt.get('valor_procedimento') or 0)
+    features_dict['patient_total_appointments_past'] = float(history['total_agendamentos_historico'])
+    features_dict['patient_noshow_rate_past'] = float(history['taxa_risco_paciente'])
 
-    input_data = {
-        "preco_numerico": float(appt.get('valor_procedimento') or 0),
-        "hora": hora_int,
-        "dia_da_semana": appt_date.weekday(),
-        "mes": appt_date.month,
-        "eh_fim_de_semana": 1 if appt_date.weekday() >= 5 else 0,
-        "total_agendamentos_anterior": history['total_agendamentos_historico'],
-        "taxa_risco_paciente": float(history['taxa_risco_paciente']),
-        "agreement_name": appt.get('nome_convenio') or "Particular",
-        "procedimento_limpo": str(appt.get('nome_procedimento', '')).split('(')[0].strip(),
-        "user_name": appt.get('nome_profissional', 'Nao Informado'),
-        "eh_primeira_consulta": 1 if history['total_agendamentos_historico'] == 0 else 0
-    }
+    # Preenche Dummies de Dia da Semana (Ajuste o nome se necessário)
+    # Dica: se o modelo foi treinado em português, 'dia_semana_Monday' não vai funcionar.
+    # Verifique o log anterior: se ele espera 'dia_semana_Segunda', use o mapeamento abaixo.
+    mapa_dias = {0: 'Segunda', 1: 'Terça', 2: 'Quarta', 3: 'Quinta', 4: 'Sexta', 5: 'Sábado', 6: 'Domingo'}
+    nome_dia = f"dia_semana_{mapa_dias[appt_date.weekday()]}"
+    if nome_dia in features_dict:
+        features_dict[nome_dia] = 1.0
+
+    # Preenche Dummies de Convênio
+    convenio = appt.get('nome_convenio')
+    nome_conv = f"agreement_name_{convenio}"
+    if nome_conv in features_dict:
+        features_dict[nome_conv] = 1.0
+
+    # Cria o DataFrame e garante a ordem das colunas
+    df_input = pd.DataFrame([features_dict])
+    df_input = df_input[model.model.exog_names]
 
     # 4. Inference
-    df_input = pd.DataFrame([input_data])
-    print(f"DEBUG: Dados preparados para o modelo: {input_data}")
-
     prediction = int(model.predict(df_input)[0])
-    print(f"DEBUG: Predição realizada com sucesso: {prediction}")
-    probability = float(model.predict_proba(df_input)[0][1])
+
+    # Statsmodels Logit não tem predict_proba direto como Scikit-Learn
+    # Para Logit, a predição já é a probabilidade se usar model.predict()
+    probability = float(prediction)
     print(f"DEBUG: Probabilidade de risco: {probability}")
 
     risk_level = "DESCONHECIDO"
