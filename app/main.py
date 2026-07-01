@@ -125,10 +125,7 @@ async def get_prediction(agendamento_id: str):
         # UPSERT: Update if exists, Insert if not.
         # This prevents the 'no-show-api:v1' and 'tcc_g_v2' from co-existing
         # for the same agendamento_id.
-        supabase.table("ai_predicoes").upsert(
-            prediction_entry,
-            on_conflict="agendamento_id"
-        ).execute()
+        supabase.table("ai_predicoes").insert(prediction_entry).execute()
 
         # Logs can remain as inserts to see the 'double hit' happening in real-time
         supabase.table("ai_logs").insert({
