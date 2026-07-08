@@ -94,11 +94,9 @@ async def get_prediction(agendamento_id: str):
     df_input = df_input[model.model.exog_names]
 
     # 4. Inference
-    prediction = int(model.predict(df_input)[0])
-
-    # Statsmodels Logit não tem predict_proba direto como Scikit-Learn
-    # Para Logit, a predição já é a probabilidade se usar model.predict()
-    probability = float(prediction)
+    # FIX: Keep prediction as float, not int
+    # Statsmodels Logit returns a probability (0.0 to 1.0), not a binary class (0 or 1)
+    probability = float(model.predict(df_input)[0])
     print(f"DEBUG: Probabilidade de risco: {probability}")
 
     risk_level = "DESCONHECIDO"
