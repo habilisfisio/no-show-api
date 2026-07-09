@@ -4,6 +4,7 @@ import logging
 import joblib
 import pandas as pd
 import numpy as np
+import re
 from fastapi import FastAPI, HTTPException
 from supabase import create_client
 from fastapi.middleware.cors import CORSMiddleware
@@ -22,7 +23,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 logger.info("=" * 70)
-logger.info("🚀 INICIANDO NO-SHOW API (versão com logging)")
+logger.info("🚀 INICIANDO NO-SHOW API (versão com novo modelo)")
 logger.info("=" * 70)
 
 load_dotenv()
@@ -56,10 +57,13 @@ supabase = create_client(url, key)
 # =============================================================================
 logger.info("📦 Carregando modelo...")
 try:
-    modelo = joblib.load("models/no_show_pipeline_v2.pkl")
+    # Carrega o modelo treinado (statsmodels ou pipeline)
+    modelo = joblib.load("models/no_show_pipeline_v2.pkl")  # ajuste o caminho se necessário
     logger.info("✅ Modelo carregado com sucesso!")
     logger.info(f"   Tipo: {type(modelo)}")
 
+    # Obter lista de colunas esperadas (com base no modelo)
+    # Para statsmodels, usamos model.exog_names
     if hasattr(modelo, 'model'):
         colunas_modelo = modelo.model.exog_names
     elif hasattr(modelo, 'feature_names_in_'):
@@ -67,16 +71,29 @@ try:
         if 'const' not in colunas_modelo:
             colunas_modelo = ['const'] + colunas_modelo
     else:
+        # Fallback: lista fixa extraída do modelo treinado
         colunas_modelo = [
-            'const', 'patient_total_appointments_past', 'patient_noshow_rate_smooth',
-            'patient_noshow_last_30d', 'patient_noshow_streak',
-            'dia_semana_Quinta', 'dia_semana_Segunda', 'dia_semana_Sexta',
-            'dia_semana_Sábado', 'dia_semana_Terça',
-            'faixa_horaria_Manhã', 'faixa_horaria_Tarde', 'faixa_horaria_Noite',
-            'agreement_name_Contrato Unimed', 'agreement_name_Judicializacao',
-            'agreement_name_Particular', 'agreement_name_Particular (negociacao)',
-            'agreement_name_Particular pago por profissional',
-            'agreement_name_Unimed Seguros'
+            'const',
+            'valor_servico',
+            'eh_bonus',
+            'patient_total_appointments_past',
+            'patient_noshow_rate_smooth',
+            'patient_noshow_last_30d',
+            'patient_noshow_streak',
+            'dia_semana_Quinta',
+            'dia_semana_Segunda',
+            'dia_semana_Sexta',
+            'dia_semana_Sábado',
+            'dia_semana_Terça',
+            'faixa_horaria_Manhã',
+            'faixa_horaria_Tarde',
+            'faixa_horaria_Noite',
+            'nome_convenio_Contrato Unimed',
+            'nome_convenio_Judicializacao',   # atenção: sem acento
+            'nome_convenio_Particular',
+            'nome_convenio_Particular (negociacao)',
+            'nome_convenio_Particular pago por profissional',
+            'nome_convenio_Unimed Seguros'
         ]
         logger.warning("⚠️ Usando lista fixa de colunas (fallback)")
 
@@ -93,28 +110,36 @@ logger.info("=" * 70)
 logger.info("✅ API pronta para receber requisições")
 logger.info("=" * 70)
 
-# Parâmetros
-MEDIA_GLOBAL = 0.1206
+# Parâmetros (iguais aos usados no treino)
+MEDIA_GLOBAL = 0.1044  # taxa base do treino
 ALPHA_SUAVIZACAO = 10
-CORTE_NEGOCIO = 0.1079
+CORTE_NEGOCIO = 0.1002  # obtido do script (recall 80%)
 
+# Mapeamento de convênios para os nomes usados nas dummies do modelo
 CONVENIO_MAP = {
     'particular': 'Particular',
     'judicializacao': 'Judicializacao',
+    'judicialização': 'Judicializacao',
     'contrato unimed': 'Contrato Unimed',
     'unimed seguros': 'Unimed Seguros',
     'particular (negociacao)': 'Particular (negociacao)',
+    'particular (negociação)': 'Particular (negociacao)',
     'particular pago por profissional': 'Particular pago por profissional',
     'atendimento custeado pela clinica': 'Atendimento custeado pela Clínica',
 }
 
 # =============================================================================
-# FUNÇÃO DE FEATURE ENGINEERING
+# FUNÇÃO DE FEATURE ENGINEERING (adaptada para o novo modelo)
 # =============================================================================
 def construir_features(appt: dict, history: dict) -> pd.DataFrame:
+    """
+    Constrói o DataFrame de features para o modelo logístico.
+    Inclui valor_servico, eh_bonus, features históricas, dia_semana, faixa_horaria e convênio.
+    """
     logger.info("   [construir_features] Iniciando...")
 
     try:
+        # 1. Data e hora
         appt_date = pd.to_datetime(appt['data_agendamento'])
         logger.info(f"   [construir_features] Data: {appt_date}")
 
@@ -127,6 +152,39 @@ def construir_features(appt: dict, history: dict) -> pd.DataFrame:
             hora = 12
         logger.info(f"   [construir_features] Hora: {hora}")
 
+        # 2. Valor do serviço e flag de bônus
+        valor_servico = 0.0
+        eh_bonus = 0
+
+        # Tenta usar valor_procedimento se existir
+        if 'valor_procedimento' in appt and appt['valor_procedimento'] is not None:
+            try:
+                valor_servico = float(appt['valor_procedimento'])
+            except:
+                valor_servico = 0.0
+
+        # Se valor_procedimento não disponível ou for zero, tenta extrair do nome_procedimento
+        if valor_servico == 0.0:
+            nome_proc = appt.get('nome_procedimento', '')
+            if isinstance(nome_proc, str):
+                # Mesma regex usada no treino
+                match = re.search(r"(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2}|\d+)", nome_proc)
+                if match:
+                    valor_str = match.group(1).replace(".", "").replace(",", ".")
+                    try:
+                        valor_servico = float(valor_str)
+                    except:
+                        valor_servico = 0.0
+
+        # Detecta se é bônus (valor zero ou nome contém "bônus")
+        nome_proc = appt.get('nome_procedimento', '')
+        if (valor_servico == 0.0) or (isinstance(nome_proc, str) and re.search(r'bônus|bonus', nome_proc, re.IGNORECASE)):
+            eh_bonus = 1
+            valor_servico = 0.0  # força zero
+
+        logger.info(f"   [construir_features] valor_servico={valor_servico}, eh_bonus={eh_bonus}")
+
+        # 3. Features históricas
         total_passado = history.get('total_agendamentos_historico', 0)
         count_faltas_passado = history.get('total_faltas_historico', 0)
         faltas_ultimos_30d = history.get('faltas_ultimos_30d', 0)
@@ -140,20 +198,34 @@ def construir_features(appt: dict, history: dict) -> pd.DataFrame:
         taxa_suavizada = (count_faltas_passado + MEDIA_GLOBAL * ALPHA_SUAVIZACAO) / (total_passado + ALPHA_SUAVIZACAO)
         logger.info(f"   [construir_features] Taxa suavizada: {taxa_suavizada:.4f}")
 
+        # 4. Inicializar dicionário com zeros
         features = {col: 0.0 for col in colunas_modelo}
         features['const'] = 1.0
 
+        # Preencher features numéricas
+        features['valor_servico'] = float(valor_servico)
+        features['eh_bonus'] = float(eh_bonus)
         features['patient_total_appointments_past'] = float(total_passado)
         features['patient_noshow_rate_smooth'] = float(taxa_suavizada)
         features['patient_noshow_last_30d'] = float(faltas_ultimos_30d)
         features['patient_noshow_streak'] = float(streak_faltas)
 
-        mapa_dias = {0: 'Segunda', 1: 'Terça', 2: 'Quarta', 3: 'Quinta', 4: 'Sexta', 5: 'Sábado', 6: 'Domingo'}
+        # 5. Dia da semana (dummies)
+        mapa_dias = {
+            0: 'Segunda',
+            1: 'Terça',
+            2: 'Quarta',
+            3: 'Quinta',
+            4: 'Sexta',
+            5: 'Sábado',
+            6: 'Domingo'
+        }
         nome_dia = f"dia_semana_{mapa_dias[appt_date.weekday()]}"
         if nome_dia in features:
             features[nome_dia] = 1.0
             logger.info(f"   [construir_features] Dia: {nome_dia}")
 
+        # 6. Faixa horária (dummies)
         if hora < 12:
             faixa = 'Manhã'
         elif hora < 18:
@@ -165,19 +237,18 @@ def construir_features(appt: dict, history: dict) -> pd.DataFrame:
             features[nome_faixa] = 1.0
             logger.info(f"   [construir_features] Faixa: {nome_faixa}")
 
+        # 7. Convênio (dummies)
         convenio_original = appt.get('nome_convenio', 'Particular')
         convenio_key = str(convenio_original).strip().lower()
         convenio_mapeado = CONVENIO_MAP.get(convenio_key, convenio_original)
-        nome_conv = f"agreement_name_{convenio_mapeado}"
+        nome_conv = f"nome_convenio_{convenio_mapeado}"
         if nome_conv in features:
             features[nome_conv] = 1.0
             logger.info(f"   [construir_features] Convênio: {nome_conv}")
 
-        preenchidas = sum(1 for v in features.values() if v != 0)
-        logger.info(f"   [construir_features] Features preenchidas: {preenchidas}/{len(features)}")
-
+        # 8. Garantir ordem das colunas
         df = pd.DataFrame([features])
-        df = df[colunas_modelo]
+        df = df[colunas_modelo]  # reordena conforme modelo
         logger.info(f"   [construir_features] DataFrame shape: {df.shape}")
         return df
 
@@ -223,9 +294,11 @@ async def get_prediction(agendamento_id: str):
         if modelo is None:
             raise Exception("Modelo não carregado")
 
+        # O modelo pode ser um objeto statsmodels ou um pipeline.
         if hasattr(modelo, 'predict'):
             probabilidade = float(modelo.predict(df_input)[0])
         else:
+            # Fallback para modelos sklearn que usam predict_proba
             probabilidade = float(modelo.predict_proba(df_input)[0][1])
 
         logger.info(f"   ✅ Probabilidade calculada: {probabilidade:.4f}")
@@ -248,7 +321,7 @@ async def get_prediction(agendamento_id: str):
                 "agendamento_id": agendamento_id,
                 "predicao_status": pred_status,
                 "probabilidade_risco": round(probabilidade, 2),
-                "modelo_versao": "tcc_g_v2"
+                "modelo_versao": "tcc_g_v2"   # mantido conforme solicitado
             }).execute()
             logger.info("   ✅ Upsert OK")
 
@@ -289,6 +362,6 @@ async def health_check():
     logger.info("🟢 Healthcheck chamado!")
     return {
         "status": "healthy",
-        "version": "tcc_g_v2",
+        "version": "tcc_g_v2",  # mantido
         "environment": os.environ.get("RAILWAY_ENVIRONMENT", "local")
     }
