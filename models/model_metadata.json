@@ -1,6 +1,6 @@
 {
     "versao": "tcc_v3_logistica_regularizada",
     "algoritmo": "Regress\u00e3o Log\u00edstica (L1)",
-    "treinado_em": "2026-07-13T01:27:14.738866",
-    "threshold": 0.16806722689075632
+    "treinado_em": "2026-07-13T02:37:30.056390",
+    "threshold": 0.06043956043956044
 }

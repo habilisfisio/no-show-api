@@ -145,10 +145,6 @@ def carregar_metadados():
 
 # Chame a função logo após carregar o modelo no seu main.py
 carregar_metadados()
-
-# =============================================================================
-# FUNÇÃO DE FEATURE ENGINEERING (adaptada para o novo modelo)
-# =============================================================================
 # =============================================================================
 # FUNÇÃO DE FEATURE ENGINEERING (Alinhada com o modelo v3)
 # =============================================================================
@@ -309,7 +305,9 @@ async def get_prediction(agendamento_id: str):
 
         logger.info(f"   ✅ Probabilidade calculada: {probabilidade:.4f}")
 
-        if probabilidade >= CORTE_NEGOCIO:
+        threshold = METADADOS_MODELO.get("threshold", 0.1680) # Usa o do JSON ou um padrão
+        
+        if probabilidade >= threshold:
             pred_status = "RISCO DE FALTA"
             if probabilidade >= 0.30:
                 nivel_risco = "ALTO"
