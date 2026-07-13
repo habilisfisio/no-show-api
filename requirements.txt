@@ -1,8 +1,9 @@
 fastapi
-uvicorn
-pandas
-scikit-learn==1.6.1
 joblib
-supabase
+matplotlib
+numpy
+pandas
 python-dotenv
+scikit-learn
 statsmodels
+supabase

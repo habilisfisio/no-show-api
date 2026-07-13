@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import traceback
 import time
+import json
 
 # =============================================================================
 # CONFIGURAÇÃO DE LOGGING
@@ -58,7 +59,7 @@ supabase = create_client(url, key)
 logger.info("📦 Carregando modelo...")
 try:
     # Carrega o modelo treinado (statsmodels ou pipeline)
-    modelo = joblib.load("models/no_show_pipeline_v2.pkl")  # ajuste o caminho se necessário
+    modelo = joblib.load("models/no_show_model.pkl")  # ajuste o caminho se necessário
     logger.info("✅ Modelo carregado com sucesso!")
     logger.info(f"   Tipo: {type(modelo)}")
 
@@ -77,7 +78,7 @@ try:
             'valor_servico',
             'eh_bonus',
             'patient_total_appointments_past',
-            'patient_noshow_rate_smooth',
+            'patient_noshow_rate_past',
             'patient_noshow_last_30d',
             'patient_noshow_streak',
             'dia_semana_Quinta',
@@ -110,11 +111,6 @@ logger.info("=" * 70)
 logger.info("✅ API pronta para receber requisições")
 logger.info("=" * 70)
 
-# Parâmetros (iguais aos usados no treino)
-MEDIA_GLOBAL = 0.1044  # taxa base do treino
-ALPHA_SUAVIZACAO = 10
-CORTE_NEGOCIO = 0.1002  # obtido do script (recall 80%)
-
 # Mapeamento de convênios para os nomes usados nas dummies do modelo
 CONVENIO_MAP = {
     'particular': 'Particular',
@@ -128,128 +124,110 @@ CONVENIO_MAP = {
     'atendimento custeado pela clinica': 'Atendimento custeado pela Clínica',
 }
 
+# Adicione uma variável global para armazenar os metadados
+METADADOS_MODELO = {}
+
+def carregar_metadados():
+    global METADADOS_MODELO
+    caminho = os.path.join(os.getcwd(), "models/model_metadata.json")
+    logger.info(f"🔍 Tentando carregar metadados em: {caminho}")
+    
+    try:
+        with open(caminho, "r") as f:
+            METADADOS_MODELO = json.load(f)
+        logger.info(f"✅ Metadados carregados: {METADADOS_MODELO}")
+    except FileNotFoundError:
+        logger.error(f"❌ Erro: Arquivo não encontrado no caminho {caminho}")
+    except json.JSONDecodeError:
+        logger.error("❌ Erro: O arquivo JSON está corrompido ou mal formatado.")
+    except Exception as e:
+        logger.error(f"❌ Erro inesperado ao carregar metadados: {type(e).__name__} - {e}")
+
+# Chame a função logo após carregar o modelo no seu main.py
+carregar_metadados()
+
 # =============================================================================
 # FUNÇÃO DE FEATURE ENGINEERING (adaptada para o novo modelo)
+# =============================================================================
+# =============================================================================
+# FUNÇÃO DE FEATURE ENGINEERING (Alinhada com o modelo v3)
 # =============================================================================
 def construir_features(appt: dict, history: dict) -> pd.DataFrame:
     """
     Constrói o DataFrame de features para o modelo logístico.
-    Inclui valor_servico, eh_bonus, features históricas, dia_semana, faixa_horaria e convênio.
+    Garante que os nomes gerados correspondam EXATAMENTE aos nomes do treino.
     """
     logger.info("   [construir_features] Iniciando...")
 
     try:
-        # 1. Data e hora
+        # 1. Inicializar dicionário com ZEROS para todas as colunas que o modelo espera
+        # Isso garante que, se uma categoria não existir (ex: não é segunda-feira), ela fica com 0.0
+        features = {col: 0.0 for col in colunas_modelo}
+        if 'const' in features:
+            features['const'] = 1.0
+
+        # 2. Data e hora
         appt_date = pd.to_datetime(appt['data_agendamento'])
-        logger.info(f"   [construir_features] Data: {appt_date}")
+        hora = pd.to_datetime(appt.get('hora_inicio', '12:00:00'), format='%H:%M:%S').hour if isinstance(appt.get('hora_inicio'), str) else getattr(appt.get('hora_inicio'), 'hour', 12)
 
-        if 'hora_inicio' in appt and appt['hora_inicio']:
-            if isinstance(appt['hora_inicio'], str):
-                hora = pd.to_datetime(appt['hora_inicio'], format='%H:%M:%S').hour
-            else:
-                hora = appt['hora_inicio'].hour
-        else:
-            hora = 12
-        logger.info(f"   [construir_features] Hora: {hora}")
-
-        # 2. Valor do serviço e flag de bônus
+        # 3. Valor do serviço e flag de bônus
         valor_servico = 0.0
         eh_bonus = 0
 
-        # Tenta usar valor_procedimento se existir
-        if 'valor_procedimento' in appt and appt['valor_procedimento'] is not None:
-            try:
-                valor_servico = float(appt['valor_procedimento'])
-            except:
-                valor_servico = 0.0
+        if appt.get('valor_procedimento'):
+            try: valor_servico = float(appt['valor_procedimento'])
+            except: pass
 
-        # Se valor_procedimento não disponível ou for zero, tenta extrair do nome_procedimento
+        nome_proc = str(appt.get('nome_procedimento', ''))
         if valor_servico == 0.0:
-            nome_proc = appt.get('nome_procedimento', '')
-            if isinstance(nome_proc, str):
-                # Mesma regex usada no treino
-                match = re.search(r"(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2}|\d+)", nome_proc)
-                if match:
-                    valor_str = match.group(1).replace(".", "").replace(",", ".")
-                    try:
-                        valor_servico = float(valor_str)
-                    except:
-                        valor_servico = 0.0
+            match = re.search(r"(\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2}|\d+)", nome_proc)
+            if match:
+                try: valor_servico = float(match.group(1).replace(".", "").replace(",", "."))
+                except: pass
 
-        # Detecta se é bônus (valor zero ou nome contém "bônus")
-        nome_proc = appt.get('nome_procedimento', '')
-        if (valor_servico == 0.0) or (isinstance(nome_proc, str) and re.search(r'bônus|bonus', nome_proc, re.IGNORECASE)):
+        if (valor_servico == 0.0) or re.search(r'bônus|bonus', nome_proc, re.IGNORECASE):
             eh_bonus = 1
-            valor_servico = 0.0  # força zero
+            valor_servico = 0.0
 
-        logger.info(f"   [construir_features] valor_servico={valor_servico}, eh_bonus={eh_bonus}")
+        # Atribuir features numéricas (com os Nomes Exatos do train.py)
+        if 'valor_servico' in features: features['valor_servico'] = float(valor_servico)
+        if 'eh_bonus' in features: features['eh_bonus'] = float(eh_bonus)
 
-        # 3. Features históricas
-        total_passado = history.get('total_agendamentos_historico', 0)
-        count_faltas_passado = history.get('total_faltas_historico', 0)
-        faltas_ultimos_30d = history.get('faltas_ultimos_30d', 0)
-        streak_faltas = history.get('sequencia_faltas_atual', 0)
-        logger.info(f"   [construir_features] Histórico: total={total_passado}, faltas={count_faltas_passado}")
+        # 4. Features históricas
+        total_passado = float(history.get('total_agendamentos_historico', 0))
+        count_faltas_passado = float(history.get('total_faltas_historico', 0))
+        
+        # A taxa agora se chama 'patient_noshow_rate_past' conforme seu treino
+        taxa_raw = count_faltas_passado / total_passado if total_passado > 0 else 0.0
 
-        if total_passado > 0:
-            taxa_raw = count_faltas_passado / total_passado
-        else:
-            taxa_raw = 0.0
-        taxa_suavizada = (count_faltas_passado + MEDIA_GLOBAL * ALPHA_SUAVIZACAO) / (total_passado + ALPHA_SUAVIZACAO)
-        logger.info(f"   [construir_features] Taxa suavizada: {taxa_suavizada:.4f}")
+        if 'patient_total_appointments_past' in features: features['patient_total_appointments_past'] = total_passado
+        if 'patient_noshow_rate_past' in features: features['patient_noshow_rate_past'] = taxa_raw
+        if 'patient_noshow_last_30d' in features: features['patient_noshow_last_30d'] = float(history.get('faltas_ultimos_30d', 0))
+        if 'patient_noshow_streak' in features: features['patient_noshow_streak'] = float(history.get('sequencia_faltas_atual', 0))
 
-        # 4. Inicializar dicionário com zeros
-        features = {col: 0.0 for col in colunas_modelo}
-        features['const'] = 1.0
-
-        # Preencher features numéricas
-        features['valor_servico'] = float(valor_servico)
-        features['eh_bonus'] = float(eh_bonus)
-        features['patient_total_appointments_past'] = float(total_passado)
-        features['patient_noshow_rate_smooth'] = float(taxa_suavizada)
-        features['patient_noshow_last_30d'] = float(faltas_ultimos_30d)
-        features['patient_noshow_streak'] = float(streak_faltas)
-
-        # 5. Dia da semana (dummies)
-        mapa_dias = {
-            0: 'Segunda',
-            1: 'Terça',
-            2: 'Quarta',
-            3: 'Quinta',
-            4: 'Sexta',
-            5: 'Sábado',
-            6: 'Domingo'
-        }
+        # 5. Dia da semana (Mapeado para INGLÊS, igual ao train.py)
+        mapa_dias = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
         nome_dia = f"dia_semana_{mapa_dias[appt_date.weekday()]}"
         if nome_dia in features:
             features[nome_dia] = 1.0
-            logger.info(f"   [construir_features] Dia: {nome_dia}")
 
-        # 6. Faixa horária (dummies)
-        if hora < 12:
-            faixa = 'Manhã'
-        elif hora < 18:
-            faixa = 'Tarde'
-        else:
-            faixa = 'Noite'
+        # 6. Faixa horária
+        faixa = 'Manhã' if hora < 12 else 'Tarde' if hora < 18 else 'Noite'
         nome_faixa = f"faixa_horaria_{faixa}"
         if nome_faixa in features:
             features[nome_faixa] = 1.0
-            logger.info(f"   [construir_features] Faixa: {nome_faixa}")
 
-        # 7. Convênio (dummies)
+        # 7. Convênio
         convenio_original = appt.get('nome_convenio', 'Particular')
         convenio_key = str(convenio_original).strip().lower()
         convenio_mapeado = CONVENIO_MAP.get(convenio_key, convenio_original)
         nome_conv = f"nome_convenio_{convenio_mapeado}"
         if nome_conv in features:
             features[nome_conv] = 1.0
-            logger.info(f"   [construir_features] Convênio: {nome_conv}")
 
-        # 8. Garantir ordem das colunas
+        # 8. Empacotar no formato e ordem corretos
         df = pd.DataFrame([features])
-        df = df[colunas_modelo]  # reordena conforme modelo
-        logger.info(f"   [construir_features] DataFrame shape: {df.shape}")
+        df = df[colunas_modelo] # Garante a mesma ordem do treino
         return df
 
     except Exception as e:
@@ -260,6 +238,34 @@ def construir_features(appt: dict, history: dict) -> pd.DataFrame:
 # =============================================================================
 # ENDPOINT DE PREDIÇÃO
 # =============================================================================
+@app.get("/model/info")
+async def get_model_info():
+    """Retorna os metadados gerados pelo train.py."""
+    return {
+        **METADADOS_MODELO,
+        "status": "healthy" if modelo is not None else "error",
+        "api_version": "tcc_g_v3"
+    }
+
+@app.get("/model/features")
+async def get_model_features():
+    """Retorna a importância baseada nos coeficientes reais do modelo carregado."""
+    if modelo is None:
+        raise HTTPException(status_code=503, detail="Modelo não disponível")
+    
+    # Se o JSON de metadados já tiver as importâncias, retorne-as
+    if "features_importances" in METADADOS_MODELO:
+        return {"importancias": METADADOS_MODELO["features_importances"]}
+        
+    # Caso contrário, calcula em tempo real como antes
+    coefs = modelo.params.drop("const", errors='ignore')
+    return {
+        "importancias": sorted(
+            [{"nome": k, "importancia": float(v)} for k, v in coefs.items()],
+            key=lambda x: abs(x['importancia']), reverse=True
+        )
+    }
+
 @app.post("/predict/{agendamento_id}")
 async def get_prediction(agendamento_id: str):
     logger.info(f"\n🔵 [ENDPOINT] Recebida requisição para: {agendamento_id}")
@@ -321,7 +327,7 @@ async def get_prediction(agendamento_id: str):
                 "agendamento_id": agendamento_id,
                 "predicao_status": pred_status,
                 "probabilidade_risco": round(probabilidade, 2),
-                "modelo_versao": "tcc_g_v2"   # mantido conforme solicitado
+                "modelo_versao": "tcc_g_v3"   # mantido conforme solicitado
             }).execute()
             logger.info("   ✅ Upsert OK")
 
@@ -329,7 +335,7 @@ async def get_prediction(agendamento_id: str):
                 "agendamento_id": agendamento_id,
                 "predicao": pred_status,
                 "probabilidade": round(probabilidade, 2),
-                "modelo_versao": "tcc_g_v2"
+                "modelo_versao": "tcc_g_v3"
             }).execute()
             logger.info("   ✅ Log OK")
 
@@ -362,6 +368,6 @@ async def health_check():
     logger.info("🟢 Healthcheck chamado!")
     return {
         "status": "healthy",
-        "version": "tcc_g_v2",  # mantido
+        "version": "tcc_g_v3",  # mantido
         "environment": os.environ.get("RAILWAY_ENVIRONMENT", "local")
     }
