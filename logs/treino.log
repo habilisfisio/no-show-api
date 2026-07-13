@@ -1,0 +1,280 @@
+2026-07-13 03:06:14,121 - INFO - 📡 Arquivo não encontrado ou atualização forçada. Buscando dados do Supabase...
+2026-07-13 03:06:16,240 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=0&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:16,254 - INFO - 📥 Baixando... 1000 linhas acumuladas.
+2026-07-13 03:06:16,690 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=1000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:16,703 - INFO - 📥 Baixando... 2000 linhas acumuladas.
+2026-07-13 03:06:17,222 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=2000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:17,235 - INFO - 📥 Baixando... 3000 linhas acumuladas.
+2026-07-13 03:06:17,693 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=3000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:17,705 - INFO - 📥 Baixando... 4000 linhas acumuladas.
+2026-07-13 03:06:18,103 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=4000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:18,119 - INFO - 📥 Baixando... 5000 linhas acumuladas.
+2026-07-13 03:06:18,335 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=5000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:18,347 - INFO - 📥 Baixando... 6000 linhas acumuladas.
+2026-07-13 03:06:18,572 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=6000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:18,585 - INFO - 📥 Baixando... 7000 linhas acumuladas.
+2026-07-13 03:06:18,773 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=7000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:18,787 - INFO - 📥 Baixando... 8000 linhas acumuladas.
+2026-07-13 03:06:19,078 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=8000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:19,089 - INFO - 📥 Baixando... 9000 linhas acumuladas.
+2026-07-13 03:06:19,727 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=9000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:19,734 - INFO - 📥 Baixando... 10000 linhas acumuladas.
+2026-07-13 03:06:20,158 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=10000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:20,172 - INFO - 📥 Baixando... 11000 linhas acumuladas.
+2026-07-13 03:06:20,362 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=11000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:20,375 - INFO - 📥 Baixando... 12000 linhas acumuladas.
+2026-07-13 03:06:20,626 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=12000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:20,638 - INFO - 📥 Baixando... 13000 linhas acumuladas.
+2026-07-13 03:06:20,801 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=13000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:20,808 - INFO - 📥 Baixando... 14000 linhas acumuladas.
+2026-07-13 03:06:21,074 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=14000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:21,081 - INFO - 📥 Baixando... 15000 linhas acumuladas.
+2026-07-13 03:06:21,248 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=15000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:21,255 - INFO - 📥 Baixando... 16000 linhas acumuladas.
+2026-07-13 03:06:21,423 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=16000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:21,430 - INFO - 📥 Baixando... 17000 linhas acumuladas.
+2026-07-13 03:06:21,593 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=17000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:21,599 - INFO - 📥 Baixando... 18000 linhas acumuladas.
+2026-07-13 03:06:21,760 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=18000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:21,775 - INFO - 📥 Baixando... 19000 linhas acumuladas.
+2026-07-13 03:06:21,933 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=19000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:21,940 - INFO - 📥 Baixando... 20000 linhas acumuladas.
+2026-07-13 03:06:22,088 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=20000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:22,102 - INFO - 📥 Baixando... 21000 linhas acumuladas.
+2026-07-13 03:06:22,255 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=21000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:22,268 - INFO - 📥 Baixando... 22000 linhas acumuladas.
+2026-07-13 03:06:22,423 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=22000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:22,431 - INFO - 📥 Baixando... 23000 linhas acumuladas.
+2026-07-13 03:06:22,584 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=23000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:22,603 - INFO - 📥 Baixando... 24000 linhas acumuladas.
+2026-07-13 03:06:22,764 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=24000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:22,777 - INFO - 📥 Baixando... 25000 linhas acumuladas.
+2026-07-13 03:06:22,946 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=25000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:22,953 - INFO - 📥 Baixando... 26000 linhas acumuladas.
+2026-07-13 03:06:23,125 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=26000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:23,132 - INFO - 📥 Baixando... 27000 linhas acumuladas.
+2026-07-13 03:06:23,287 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=27000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:23,302 - INFO - 📥 Baixando... 28000 linhas acumuladas.
+2026-07-13 03:06:23,462 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=28000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:23,469 - INFO - 📥 Baixando... 29000 linhas acumuladas.
+2026-07-13 03:06:23,626 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=29000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:23,639 - INFO - 📥 Baixando... 30000 linhas acumuladas.
+2026-07-13 03:06:23,795 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=30000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:23,807 - INFO - 📥 Baixando... 31000 linhas acumuladas.
+2026-07-13 03:06:23,969 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=31000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:23,982 - INFO - 📥 Baixando... 32000 linhas acumuladas.
+2026-07-13 03:06:24,146 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=32000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:24,159 - INFO - 📥 Baixando... 33000 linhas acumuladas.
+2026-07-13 03:06:24,326 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=33000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:24,333 - INFO - 📥 Baixando... 34000 linhas acumuladas.
+2026-07-13 03:06:24,515 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=34000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:24,522 - INFO - 📥 Baixando... 35000 linhas acumuladas.
+2026-07-13 03:06:24,696 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=35000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:24,709 - INFO - 📥 Baixando... 36000 linhas acumuladas.
+2026-07-13 03:06:24,886 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=36000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:24,893 - INFO - 📥 Baixando... 37000 linhas acumuladas.
+2026-07-13 03:06:25,081 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=37000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:25,095 - INFO - 📥 Baixando... 38000 linhas acumuladas.
+2026-07-13 03:06:25,278 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=38000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:25,285 - INFO - 📥 Baixando... 39000 linhas acumuladas.
+2026-07-13 03:06:25,468 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=39000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:25,481 - INFO - 📥 Baixando... 40000 linhas acumuladas.
+2026-07-13 03:06:25,666 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=40000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:25,673 - INFO - 📥 Baixando... 41000 linhas acumuladas.
+2026-07-13 03:06:25,857 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=41000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:25,864 - INFO - 📥 Baixando... 42000 linhas acumuladas.
+2026-07-13 03:06:26,048 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=42000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:26,060 - INFO - 📥 Baixando... 43000 linhas acumuladas.
+2026-07-13 03:06:26,241 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=43000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:26,248 - INFO - 📥 Baixando... 44000 linhas acumuladas.
+2026-07-13 03:06:26,430 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=44000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:26,437 - INFO - 📥 Baixando... 45000 linhas acumuladas.
+2026-07-13 03:06:26,620 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=45000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:26,626 - INFO - 📥 Baixando... 46000 linhas acumuladas.
+2026-07-13 03:06:26,815 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=46000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:26,827 - INFO - 📥 Baixando... 47000 linhas acumuladas.
+2026-07-13 03:06:27,021 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=47000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:27,032 - INFO - 📥 Baixando... 48000 linhas acumuladas.
+2026-07-13 03:06:27,222 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=48000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:27,234 - INFO - 📥 Baixando... 49000 linhas acumuladas.
+2026-07-13 03:06:27,431 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=49000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:27,444 - INFO - 📥 Baixando... 50000 linhas acumuladas.
+2026-07-13 03:06:27,647 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=50000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:27,659 - INFO - 📥 Baixando... 51000 linhas acumuladas.
+2026-07-13 03:06:27,863 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=51000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:27,869 - INFO - 📥 Baixando... 52000 linhas acumuladas.
+2026-07-13 03:06:28,117 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=52000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:28,123 - INFO - 📥 Baixando... 53000 linhas acumuladas.
+2026-07-13 03:06:28,366 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=53000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:28,373 - INFO - 📥 Baixando... 54000 linhas acumuladas.
+2026-07-13 03:06:28,605 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=54000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:28,628 - INFO - 📥 Baixando... 55000 linhas acumuladas.
+2026-07-13 03:06:28,856 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=55000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:28,876 - INFO - 📥 Baixando... 56000 linhas acumuladas.
+2026-07-13 03:06:29,088 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=56000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:29,101 - INFO - 📥 Baixando... 57000 linhas acumuladas.
+2026-07-13 03:06:29,328 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=57000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:29,335 - INFO - 📥 Baixando... 58000 linhas acumuladas.
+2026-07-13 03:06:29,588 - INFO - HTTP Request: GET https://fzndpaiuqqzgnrsxxlzj.supabase.co/rest/v1/agendamentos?select=paciente_id%2Cdata_agendamento%2Chora_inicio%2Cstatus%2Cnome_procedimento%2Cnome_convenio&status=in.%28atendido%2Cdesmarcado%2Cfalta%29&offset=58000&limit=1000 "HTTP/2 200 OK"
+2026-07-13 03:06:29,597 - INFO - 📥 Baixando... 58447 linhas acumuladas.
+2026-07-13 03:06:30,009 - INFO - 💾 Dados salvos em data/agendamentos_processados.parquet
+2026-07-13 03:06:30,009 - INFO - ✅ Dados carregados com sucesso. Total Final: 58447 linhas.
+2026-07-13 03:06:31,710 - INFO - Colunas usadas no treino: ['valor_servico', 'eh_bonus', 'eh_pacote_recorrente', 'patient_total_appointments_past', 'patient_noshow_rate_past', 'patient_noshow_last_30d', 'patient_noshow_streak', 'dia_semana_Monday', 'dia_semana_Saturday', 'dia_semana_Thursday', 'dia_semana_Tuesday', 'dia_semana_Wednesday', 'faixa_horaria_Manhã', 'faixa_horaria_Tarde', 'faixa_horaria_Noite', 'nome_convenio_Contrato Unimed', 'nome_convenio_Judicializacao', 'nome_convenio_Particular', 'nome_convenio_Particular (negociacao)', 'nome_convenio_Unimed Seguros']
+2026-07-13 03:06:45,446 - INFO - 
+Coeficientes do Modelo:
+                                                                     feature      coef
+patient_noshow_rate_past                            patient_noshow_rate_past  2.599902
+patient_noshow_streak                                  patient_noshow_streak  0.692618
+eh_bonus                                                            eh_bonus  0.092215
+nome_convenio_Particular (negociacao)  nome_convenio_Particular (negociacao)  0.086179
+nome_convenio_Particular                            nome_convenio_Particular  0.074261
+faixa_horaria_Noite                                      faixa_horaria_Noite  0.043755
+patient_noshow_last_30d                              patient_noshow_last_30d  0.023570
+valor_servico                                                  valor_servico -0.000598
+patient_total_appointments_past              patient_total_appointments_past -0.000764
+eh_pacote_recorrente                                    eh_pacote_recorrente -0.056963
+dia_semana_Thursday                                      dia_semana_Thursday -0.092175
+dia_semana_Tuesday                                        dia_semana_Tuesday -0.235551
+dia_semana_Saturday                                      dia_semana_Saturday -0.260475
+faixa_horaria_Tarde                                      faixa_horaria_Tarde -0.302369
+faixa_horaria_Manhã                                      faixa_horaria_Manhã -0.316416
+dia_semana_Wednesday                                    dia_semana_Wednesday -0.329377
+dia_semana_Monday                                          dia_semana_Monday -0.336416
+nome_convenio_Judicializacao                    nome_convenio_Judicializacao -0.943293
+nome_convenio_Unimed Seguros                    nome_convenio_Unimed Seguros -2.226197
+nome_convenio_Contrato Unimed                  nome_convenio_Contrato Unimed -2.295596
+2026-07-13 03:06:45,461 - INFO - ✅ Modelo exportado para models/no_show_model.pkl
+2026-07-13 03:06:45,461 - INFO - ✅ Metadados exportados para models/model_metadata.json
+2026-07-13 03:06:45,469 - INFO - AUC Score: 0.8767
+2026-07-13 03:06:45,478 - INFO - 
+Relatório de Classificação:
+              precision    recall  f1-score   support
+
+           0      0.972     0.776     0.863     10476
+           1      0.289     0.804     0.426      1186
+
+    accuracy                          0.779     11662
+   macro avg      0.631     0.790     0.645     11662
+weighted avg      0.903     0.779     0.819     11662
+
+2026-07-13 03:06:45,537 - INFO - ✅ Matriz de confusão salva em logs/confusion_matrix.png
+2026-07-13 03:19:24,076 - INFO - 📂 Lendo dados localmente de data/agendamentos_processados.parquet...
+2026-07-13 03:19:25,857 - INFO - Colunas usadas no treino: ['valor_servico', 'eh_bonus', 'eh_pacote_recorrente', 'patient_total_appointments_past', 'patient_noshow_rate_past', 'patient_noshow_last_30d', 'patient_noshow_streak', 'dia_semana_Monday', 'dia_semana_Saturday', 'dia_semana_Thursday', 'dia_semana_Tuesday', 'dia_semana_Wednesday', 'faixa_horaria_Manhã', 'faixa_horaria_Tarde', 'faixa_horaria_Noite', 'nome_convenio_Contrato Unimed', 'nome_convenio_Judicializacao', 'nome_convenio_Particular', 'nome_convenio_Particular (negociacao)', 'nome_convenio_Unimed Seguros']
+2026-07-13 03:19:44,202 - INFO - 
+Coeficientes do Modelo:
+                                                                     feature      coef
+patient_noshow_rate_past                            patient_noshow_rate_past  2.608335
+patient_noshow_streak                                  patient_noshow_streak  0.692576
+eh_bonus                                                            eh_bonus  0.099712
+nome_convenio_Particular (negociacao)  nome_convenio_Particular (negociacao)  0.095166
+nome_convenio_Particular                            nome_convenio_Particular  0.080549
+faixa_horaria_Noite                                      faixa_horaria_Noite  0.046210
+patient_noshow_last_30d                              patient_noshow_last_30d  0.023520
+valor_servico                                                  valor_servico -0.000573
+patient_total_appointments_past              patient_total_appointments_past -0.000762
+eh_pacote_recorrente                                    eh_pacote_recorrente -0.053114
+dia_semana_Thursday                                      dia_semana_Thursday -0.096168
+dia_semana_Tuesday                                        dia_semana_Tuesday -0.239632
+dia_semana_Saturday                                      dia_semana_Saturday -0.283291
+faixa_horaria_Tarde                                      faixa_horaria_Tarde -0.322630
+dia_semana_Wednesday                                    dia_semana_Wednesday -0.332943
+faixa_horaria_Manhã                                      faixa_horaria_Manhã -0.336585
+dia_semana_Monday                                          dia_semana_Monday -0.340240
+nome_convenio_Judicializacao                    nome_convenio_Judicializacao -0.937538
+nome_convenio_Contrato Unimed                  nome_convenio_Contrato Unimed -2.375896
+nome_convenio_Unimed Seguros                    nome_convenio_Unimed Seguros -2.917184
+2026-07-13 03:19:44,216 - INFO - ✅ Modelo exportado para models/no_show_model.pkl
+2026-07-13 03:19:44,216 - INFO - ✅ Metadados exportados para models/model_metadata.json
+2026-07-13 03:19:44,225 - INFO - AUC Score: 0.8767
+2026-07-13 03:19:44,234 - INFO - 
+Relatório de Classificação:
+              precision    recall  f1-score   support
+
+           0      0.972     0.776     0.863     10476
+           1      0.289     0.804     0.425      1186
+
+    accuracy                          0.779     11662
+   macro avg      0.630     0.790     0.644     11662
+weighted avg      0.903     0.779     0.818     11662
+
+2026-07-13 03:19:44,302 - INFO - ✅ Matriz de confusão salva em logs/confusion_matrix.png
+2026-07-13 03:25:41,957 - INFO - 📂 Lendo dados localmente de data/agendamentos_processados.parquet...
+2026-07-13 03:25:43,598 - INFO - Colunas usadas no treino: ['valor_servico', 'eh_bonus', 'eh_pacote_recorrente', 'patient_total_appointments_past', 'patient_noshow_rate_past', 'patient_noshow_last_30d', 'patient_noshow_streak', 'dia_semana_Monday', 'dia_semana_Saturday', 'dia_semana_Thursday', 'dia_semana_Tuesday', 'dia_semana_Wednesday', 'faixa_horaria_Manhã', 'faixa_horaria_Tarde', 'faixa_horaria_Noite', 'nome_convenio_Contrato Unimed', 'nome_convenio_Judicializacao', 'nome_convenio_Particular', 'nome_convenio_Particular (negociacao)', 'nome_convenio_Unimed Seguros']
+2026-07-13 03:26:02,970 - INFO - 
+Coeficientes do Modelo:
+                                                                     feature      coef
+patient_noshow_rate_past                            patient_noshow_rate_past  2.608335
+patient_noshow_streak                                  patient_noshow_streak  0.692576
+eh_bonus                                                            eh_bonus  0.099712
+nome_convenio_Particular (negociacao)  nome_convenio_Particular (negociacao)  0.095166
+nome_convenio_Particular                            nome_convenio_Particular  0.080549
+faixa_horaria_Noite                                      faixa_horaria_Noite  0.046210
+patient_noshow_last_30d                              patient_noshow_last_30d  0.023520
+valor_servico                                                  valor_servico -0.000573
+patient_total_appointments_past              patient_total_appointments_past -0.000762
+eh_pacote_recorrente                                    eh_pacote_recorrente -0.053114
+dia_semana_Thursday                                      dia_semana_Thursday -0.096168
+dia_semana_Tuesday                                        dia_semana_Tuesday -0.239632
+dia_semana_Saturday                                      dia_semana_Saturday -0.283291
+faixa_horaria_Tarde                                      faixa_horaria_Tarde -0.322630
+dia_semana_Wednesday                                    dia_semana_Wednesday -0.332943
+faixa_horaria_Manhã                                      faixa_horaria_Manhã -0.336585
+dia_semana_Monday                                          dia_semana_Monday -0.340240
+nome_convenio_Judicializacao                    nome_convenio_Judicializacao -0.937538
+nome_convenio_Contrato Unimed                  nome_convenio_Contrato Unimed -2.375896
+nome_convenio_Unimed Seguros                    nome_convenio_Unimed Seguros -2.917184
+2026-07-13 03:26:02,985 - INFO - ✅ Modelo exportado para models/no_show_model.pkl
+2026-07-13 03:26:02,986 - INFO - ✅ Metadados exportados para models/model_metadata.json
+2026-07-13 03:26:02,996 - INFO - AUC Score: 0.8767
+2026-07-13 03:26:03,006 - INFO - 
+Relatório de Classificação:
+              precision    recall  f1-score   support
+
+           0      0.972     0.776     0.863     10476
+           1      0.289     0.804     0.425      1186
+
+    accuracy                          0.779     11662
+   macro avg      0.630     0.790     0.644     11662
+weighted avg      0.903     0.779     0.818     11662
+
+2026-07-13 03:26:03,068 - INFO - ✅ Matriz de confusão salva em logs/confusion_matrix.png
+2026-07-13 03:44:30,783 - INFO - 📂 Lendo dados localmente de data/agendamentos_processados.parquet...
+2026-07-13 03:44:32,451 - INFO - Colunas usadas no treino: ['valor_servico', 'eh_bonus', 'eh_pacote_recorrente', 'patient_total_appointments_past', 'patient_noshow_rate_past', 'patient_noshow_last_30d', 'patient_noshow_streak', 'dia_semana_Monday', 'dia_semana_Saturday', 'dia_semana_Thursday', 'dia_semana_Tuesday', 'dia_semana_Wednesday', 'faixa_horaria_Manhã', 'faixa_horaria_Tarde', 'faixa_horaria_Noite', 'nome_convenio_Contrato Unimed', 'nome_convenio_Judicializacao', 'nome_convenio_Particular', 'nome_convenio_Particular (negociacao)', 'nome_convenio_Unimed Seguros']
+2026-07-13 03:44:50,733 - INFO - 
+Coeficientes do Modelo:
+                                                                     feature      coef
+patient_noshow_rate_past                            patient_noshow_rate_past  2.608335
+patient_noshow_streak                                  patient_noshow_streak  0.692576
+eh_bonus                                                            eh_bonus  0.099712
+nome_convenio_Particular (negociacao)  nome_convenio_Particular (negociacao)  0.095166
+nome_convenio_Particular                            nome_convenio_Particular  0.080549
+faixa_horaria_Noite                                      faixa_horaria_Noite  0.046210
+patient_noshow_last_30d                              patient_noshow_last_30d  0.023520
+valor_servico                                                  valor_servico -0.000573
+patient_total_appointments_past              patient_total_appointments_past -0.000762
+eh_pacote_recorrente                                    eh_pacote_recorrente -0.053114
+dia_semana_Thursday                                      dia_semana_Thursday -0.096168
+dia_semana_Tuesday                                        dia_semana_Tuesday -0.239632
+dia_semana_Saturday                                      dia_semana_Saturday -0.283291
+faixa_horaria_Tarde                                      faixa_horaria_Tarde -0.322630
+dia_semana_Wednesday                                    dia_semana_Wednesday -0.332943
+faixa_horaria_Manhã                                      faixa_horaria_Manhã -0.336585
+dia_semana_Monday                                          dia_semana_Monday -0.340240
+nome_convenio_Judicializacao                    nome_convenio_Judicializacao -0.937538
+nome_convenio_Contrato Unimed                  nome_convenio_Contrato Unimed -2.375896
+nome_convenio_Unimed Seguros                    nome_convenio_Unimed Seguros -2.917184
+2026-07-13 03:44:50,746 - INFO - ✅ Modelo exportado para models/no_show_model.pkl
+2026-07-13 03:44:50,748 - INFO - ✅ Metadados exportados para models/model_metadata.json
+2026-07-13 03:44:50,757 - INFO - AUC Score: 0.8767
+2026-07-13 03:44:50,768 - INFO - 
+Relatório de Classificação:
+              precision    recall  f1-score   support
+
+           0      0.972     0.776     0.863     10476
+           1      0.289     0.804     0.425      1186
+
+    accuracy                          0.779     11662
+   macro avg      0.630     0.790     0.644     11662
+weighted avg      0.903     0.779     0.818     11662
+
+2026-07-13 03:44:50,839 - INFO - ✅ Matriz de confusão salva em logs/confusion_matrix.png

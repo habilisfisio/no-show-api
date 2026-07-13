@@ -296,26 +296,49 @@ async def get_prediction(agendamento_id: str):
         if modelo is None:
             raise Exception("Modelo não carregado")
 
-        # O modelo pode ser um objeto statsmodels ou um pipeline.
-        if hasattr(modelo, 'predict'):
+        logger.info("   [ENDPOINT] Executando predição...")
+        if hasattr(modelo, 'params'): # statsmodels
             probabilidade = float(modelo.predict(df_input)[0])
         else:
-            # Fallback para modelos sklearn que usam predict_proba
             probabilidade = float(modelo.predict_proba(df_input)[0][1])
 
+        # SÓ AGORA LOGAMOS A PROBABILIDADE
         logger.info(f"   ✅ Probabilidade calculada: {probabilidade:.4f}")
 
-        threshold = METADADOS_MODELO.get("threshold", 0.1680) # Usa o do JSON ou um padrão
-        
-        if probabilidade >= threshold:
+        # 4. Lógica de decisão (Threshold)
+        threshold_alerta = 0.05 
+
+        if probabilidade >= threshold_alerta:
             pred_status = "RISCO DE FALTA"
-            if probabilidade >= 0.30:
+            if probabilidade >= 0.25:
                 nivel_risco = "ALTO"
-            else:
+            elif probabilidade >= 0.10:
                 nivel_risco = "MÉDIO"
+            else:
+                nivel_risco = "BAIXO-ALERTA"
         else:
             pred_status = "COMPARECE"
             nivel_risco = "BAIXO"
+
+        logger.info(f"   ✅ Classificação: {pred_status} ({nivel_risco})")
+
+        # 5. Persistência
+        try:
+            supabase.table("ai_predicoes").upsert({
+                "agendamento_id": agendamento_id,
+                "predicao_status": pred_status,
+                "probabilidade_risco": round(probabilidade, 2),
+                "modelo_versao": "tcc_g_v3"
+            }).execute()
+            
+            supabase.table("ai_logs").insert({
+                "agendamento_id": agendamento_id,
+                "predicao": pred_status,
+                "probabilidade": round(probabilidade, 2),
+                "modelo_versao": "tcc_g_v3"
+            }).execute()
+        except Exception as e:
+            logger.warning(f"   ⚠️ Erro ao persistir logs: {e}")
 
         logger.info(f"   ✅ Classificação: {pred_status} ({nivel_risco})")
 

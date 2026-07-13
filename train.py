@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, ConfusionMatrixDisplay
 from data.supabase_client import buscar_e_limpar_dados
+from sklearn.utils.class_weight import compute_sample_weight
 
 # Configuração de Log
 if not os.path.exists('logs'): os.makedirs('logs')
@@ -57,6 +58,11 @@ df = df[df["nome_convenio"].isin(volume_conv[volume_conv >= 30].index)]
 df["dia_semana"] = df['data_agendamento'].dt.day_name()
 df["faixa_horaria"] = pd.cut(pd.to_datetime(df['hora_inicio'], format='%H:%M:%S').dt.hour, 
                              bins=[-0.1, 4.9, 11.9, 17.9, 23.9], labels=["Madrugada", "Manhã", "Tarde", "Noite"])
+# Mantenha as colunas originais e adicione a combinação
+df['dia_horario'] = df['dia_semana'].astype(str) + '_' + df['faixa_horaria'].astype(str)
+
+# Em 'features_cat', certifique-se de adicionar a nova coluna
+features_cat = ["dia_semana", "faixa_horaria", "nome_convenio", "dia_horario"]
 
 # Features Históricas
 df = df.sort_values(["paciente_id", "data_agendamento"])
@@ -87,15 +93,21 @@ X = X.replace([np.inf, -np.inf], 0)
 # Coloque isso exatamente antes de X = pd.get_dummies(...)
 logger.info(f"Colunas usadas no treino: {X.columns.tolist()}")
 
-# Adicione isso antes do modelo_log = sm.Logit(...)
 if 'status' in X.columns:
     logger.error("ALERTA CRÍTICO: A coluna 'status' ainda está no conjunto de features!")
 
 X_train, X_test, y_train, y_test = train_test_split(X, df["NoShow"], test_size=0.2, random_state=42, stratify=df["NoShow"])
 ponto_corte = y_train.mean()
 
-# Treino com Regularização L1 para evitar o erro de Hessian e reduzir o overfitting
-modelo_log = sm.Logit(y_train, sm.add_constant(X_train)).fit_regularized(method='l1', alpha=1.0)
+# Force o modelo a dar 20x mais importância para o erro na classe de falta
+pesos_classes = {0: 1, 1: 40} 
+
+# Aplique no treino
+modelo_log = sm.Logit(y_train, sm.add_constant(X_train)).fit_regularized(
+    method='l1', 
+    alpha=0.5,
+    weights=y_train.map(pesos_classes)
+)
 
 # Analise quais variáveis são as "culpadas" pelo overfitting
 coefs = pd.DataFrame({'feature': X_train.columns, 'coef': modelo_log.params.drop("const")})
