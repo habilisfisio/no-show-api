@@ -1,0 +1,6 @@
+{
+    "versao": "tcc_v5_rede_neural",
+    "algoritmo": "Rede Neural (MLP 16-8-1)",
+    "treinado_em": "2026-07-30",
+    "threshold":0.3623
+}
