@@ -232,8 +232,14 @@ async def predict_no_show(
                 detail="Registro de agendamento não contém 'paciente_id'."
             )
 
-        # Query 2: Histórico
-        hist_resp = await supabase.table("v_paciente_features").select("*").eq("paciente_id", paciente_id).single().execute()
+        # Query 2: Histórico (Point-in-Time via RPC)
+        hist_resp = await supabase.rpc(
+            "calcular_features_paciente", 
+            {
+                "p_paciente_id": paciente_id, 
+                "p_data_ref": appt.get("data_agendamento")
+            }
+        ).execute()
         history = hist_resp.data or {}
 
         # Inference
